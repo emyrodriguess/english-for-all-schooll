@@ -1,0 +1,27 @@
+/*
+!app
+!components
+!config
+!content
+!lib
+!public
+!package.json
+!package-lock.json
+!next.config.mjs
+!next-env.d.ts
+!postcss.config.js
+!tailwind.config.ts
+!tsconfig.json
+
+# Never upload internal or local-only material, even from a CLI deployment.
+app/styleguide/
+internal/
+docs/
+tests/
+test-results/
+playwright-report/
+lighthouse-reports/
+AGENTS.md
+CLAUDE.md
+components.json
+.env*
