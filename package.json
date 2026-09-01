@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test:e2e": "cross-env SITE_URL=https://english-for-all.example E2E_EXPECT_INDEXABLE=1 npm run test:e2e:run",
-    "test:e2e:preview": "cross-env SITE_URL= E2E_EXPECT_INDEXABLE=0 npm run test:e2e:run",
+    "test:e2e": "cross-env E2E_EXPECT_INDEXABLE=1 npm run test:e2e:run",
+    "test:e2e:preview": "cross-env E2E_EXPECT_INDEXABLE=0 npm run test:e2e:run",
     "test:e2e:run": "next build && playwright test"
   },
   "dependencies": {

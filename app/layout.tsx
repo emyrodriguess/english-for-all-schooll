@@ -14,28 +14,34 @@ const poppins = Poppins({
   preload: false,
 });
 
-const previewUrl = process.env.VERCEL_URL
-  ? new URL(`https://${process.env.VERCEL_URL}`)
-  : new URL("http://localhost:3000");
-
 const title = "English For All | Aulas de Inglês Online para Todas as Idades";
 const socialImage = {
   url: "/brand/open-graph-social-share.png",
   width: 1729,
   height: 910,
+  type: "image/png",
   alt: "English For All — Inglês para a vida real.",
 };
 
 export const metadata: Metadata = {
-  metadataBase: siteConfig.siteUrl ?? previewUrl,
+  metadataBase: siteConfig.siteUrl,
   title,
   description: siteConfig.description,
   applicationName: "English For All",
   creator: "English For All",
   publisher: "English For All",
   category: "education",
-  alternates: siteConfig.siteUrl ? { canonical: "/" } : undefined,
+  keywords: [
+    "aulas de inglês online",
+    "curso de inglês online",
+    "professora de inglês online",
+    "inglês para crianças",
+    "inglês para adolescentes",
+    "inglês para adultos",
+  ],
+  alternates: { canonical: "/" },
   manifest: "/site.webmanifest",
+  formatDetection: { address: false, email: false, telephone: false },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -50,7 +56,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "English For All",
-    url: siteConfig.siteUrl ? "/" : undefined,
+    url: "/",
     images: [socialImage],
   },
   twitter: {
@@ -59,7 +65,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [socialImage],
   },
-  robots: siteConfig.siteUrl
+  robots: siteConfig.isIndexable
     ? {
         index: true,
         follow: true,

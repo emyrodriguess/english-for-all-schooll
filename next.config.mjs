@@ -1,5 +1,7 @@
 const isDevelopment = process.env.NODE_ENV === "development";
-const isIndexable = Boolean(process.env.SITE_URL?.trim());
+const isIndexable =
+  process.env.VERCEL_ENV === "production" ||
+  process.env.E2E_EXPECT_INDEXABLE === "1";
 
 const contentSecurityPolicy = [
   "default-src 'self'",

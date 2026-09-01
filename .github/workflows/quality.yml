@@ -40,3 +40,6 @@ jobs:
 
       - name: Production E2E
         run: npm run test:e2e
+
+      - name: Preview E2E
+        run: npm run test:e2e:preview

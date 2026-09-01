@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 
 export default function robots(): MetadataRoute.Robots {
-  if (!siteConfig.siteUrl) {
+  if (!siteConfig.isIndexable) {
     return {
       rules: { userAgent: "*", disallow: "/" },
     };

@@ -2,6 +2,7 @@
   "name": "English For All",
   "short_name": "English For All",
   "description": "Aulas de inglês online para todas as idades em todo o Brasil.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "lang": "pt-BR",

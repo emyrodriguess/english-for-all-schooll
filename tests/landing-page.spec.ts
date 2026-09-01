@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const whatsappUrl = "https://wa.me/5511942685665";
+const productionUrl = "https://eforallschool.com.br";
 const expectedDescription =
   "Aulas de inglês online para crianças, adolescentes, jovens e adultos em todo o Brasil, com foco em comunicação, prática e acompanhamento próximo.";
 const isIndexable = process.env.E2E_EXPECT_INDEXABLE === "1";
@@ -17,7 +18,11 @@ test("expõe semântica e metadata completas", async ({ page }) => {
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    /\/brand\/open-graph-social-share\.png$/,
+    `${productionUrl}/brand/open-graph-social-share.png`,
+  );
+  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
+    "content",
+    productionUrl,
   );
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
     "content",
@@ -39,12 +44,10 @@ test("expõe semântica e metadata completas", async ({ page }) => {
   const canonical = page.locator('link[rel="canonical"]');
   const jsonLd = page.locator('script[type="application/ld+json"]');
 
+  await expect(canonical).toHaveAttribute("href", productionUrl);
+
   if (isIndexable) {
     await expect(robots).toHaveAttribute("content", /index, follow/);
-    await expect(canonical).toHaveAttribute(
-      "href",
-      "https://english-for-all.example",
-    );
     await expect(jsonLd).toHaveCount(1);
 
     const graph = JSON.parse((await jsonLd.textContent()) ?? "{}") as {
@@ -60,7 +63,6 @@ test("expõe semântica e metadata completas", async ({ page }) => {
     );
   } else {
     await expect(robots).toHaveAttribute("content", /noindex/);
-    await expect(canonical).toHaveCount(0);
     await expect(jsonLd).toHaveCount(0);
   }
 });
@@ -150,10 +152,32 @@ test("serve robots, sitemap, manifest e assets de marca", async ({ request }) =>
   const manifestData = (await manifest.json()) as { name?: string; icons?: unknown[] };
 
   expect(robotsText).toContain(isIndexable ? "Allow: /" : "Disallow: /");
-  expect(sitemapText.includes("https://english-for-all.example/")).toBe(isIndexable);
+  expect(sitemapText.includes(`${productionUrl}/`)).toBe(isIndexable);
   expect(manifestData.name).toBe("English For All");
   expect(manifestData.icons).toHaveLength(2);
   expect(openGraph.headers()["content-type"]).toContain("image/png");
+  expect(openGraph.headers()["cache-control"]).toContain("public");
+
+  const openGraphImage = await openGraph.body();
+  expect(openGraphImage.subarray(1, 4).toString("ascii")).toBe("PNG");
+  expect(openGraphImage.readUInt32BE(16)).toBe(1729);
+  expect(openGraphImage.readUInt32BE(20)).toBe(910);
+  expect(openGraphImage.byteLength).toBeGreaterThan(100_000);
+});
+
+test("não registra erros no console nem exceções de página", async ({ page }) => {
+  const errors: string[] = [];
+
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.goto("/");
+  await page.locator("footer").scrollIntoViewIfNeeded();
+  await page.waitForLoadState("networkidle");
+
+  expect(errors).toEqual([]);
 });
 
 test("carrega todo o documento até o rodapé sem imagens quebradas", async ({ page }) => {

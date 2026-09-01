@@ -1,33 +1,8 @@
-function resolveSiteUrl() {
-  const candidate = process.env.SITE_URL?.trim();
+const siteUrl = new URL("https://eforallschool.com.br");
 
-  if (!candidate) {
-    return undefined;
-  }
-
-  let url: URL;
-
-  try {
-    url = new URL(candidate);
-  } catch (error) {
-    throw new Error("SITE_URL must be a valid absolute URL.", { cause: error });
-  }
-
-  if (
-    url.protocol !== "https:" ||
-    url.username ||
-    url.password ||
-    url.pathname !== "/" ||
-    url.search ||
-    url.hash
-  ) {
-    throw new Error(
-      "SITE_URL must be an HTTPS origin without credentials, path, query, or hash.",
-    );
-  }
-
-  return url;
-}
+const isIndexable =
+  process.env.VERCEL_ENV === "production" ||
+  process.env.E2E_EXPECT_INDEXABLE === "1";
 
 export const siteConfig = {
   name: "English For All",
@@ -40,5 +15,6 @@ export const siteConfig = {
   whatsappUrl: "https://wa.me/5511942685665",
   instagramUrl: "https://www.instagram.com/eforall.school",
   instagramHandle: "@eforall.school",
-  siteUrl: resolveSiteUrl(),
+  siteUrl,
+  isIndexable,
 } as const;

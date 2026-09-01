@@ -11,7 +11,7 @@ export function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden bg-card" id="inicio">
       <div aria-hidden="true" className="hero-backdrop" />
-      <div className="mx-auto grid w-full max-w-[1536px] items-center gap-12 px-5 py-12 sm:px-8 sm:py-16 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-2 lg:items-start lg:gap-14 lg:px-12 lg:py-16 xl:gap-20 xl:pt-[4.5rem]">
+      <div className="mx-auto grid w-full max-w-[1536px] items-center gap-12 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-2 lg:items-start lg:gap-14 lg:px-12 lg:py-16 xl:gap-20 xl:pt-[4.5rem]">
         <div className="relative z-10 flex flex-col gap-7">
           <span aria-hidden="true" className="h-0.5 w-10 rounded-full bg-secondary lg:hidden" />
           <h1 className="max-w-2xl text-4xl font-bold leading-[1.08] tracking-tight text-primary sm:text-5xl lg:text-6xl">

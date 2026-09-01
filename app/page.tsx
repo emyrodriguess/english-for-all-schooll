@@ -18,7 +18,7 @@ function serializeJsonLd(value: unknown) {
 }
 
 function StructuredData() {
-  if (!siteConfig.siteUrl) return null;
+  if (!siteConfig.isIndexable) return null;
 
   const organizationId = new URL("/#organization", siteConfig.siteUrl).toString();
   const websiteId = new URL("/#website", siteConfig.siteUrl).toString();
