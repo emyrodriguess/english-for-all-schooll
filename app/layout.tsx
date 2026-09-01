@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
@@ -13,6 +14,8 @@ const poppins = Poppins({
   display: "swap",
   preload: false,
 });
+
+const isVercelDeployment = process.env.VERCEL === "1";
 
 const title = "English For All | Aulas de Inglês Online para Todas as Idades";
 const socialImage = {
@@ -94,7 +97,12 @@ export default function RootLayout({
     <html className={poppins.variable} lang="pt-BR" suppressHydrationWarning>
       <body>
         {children}
-        {process.env.VERCEL ? <SpeedInsights /> : null}
+        {isVercelDeployment ? (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        ) : null}
       </body>
     </html>
   );
