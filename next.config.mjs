@@ -55,7 +55,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/brand/open-graph-social-share.png",
+        source: "/brand/open-graph-v2.jpg",
         headers: [
           {
             key: "Cache-Control",

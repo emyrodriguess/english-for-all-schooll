@@ -18,7 +18,19 @@ test("expõe semântica e metadata completas", async ({ page }) => {
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    `${productionUrl}/brand/open-graph-social-share.png`,
+    `${productionUrl}/brand/open-graph-v2.jpg`,
+  );
+  await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute(
+    "content",
+    "1200",
+  );
+  await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute(
+    "content",
+    "630",
+  );
+  await expect(page.locator('meta[property="og:image:type"]')).toHaveAttribute(
+    "content",
+    "image/jpeg",
   );
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
     "content",
@@ -140,7 +152,7 @@ test("serve robots, sitemap, manifest e assets de marca", async ({ request }) =>
     request.get("/sitemap.xml"),
     request.get("/site.webmanifest"),
     request.get("/favicon.ico"),
-    request.get("/brand/open-graph-social-share.png"),
+    request.get("/brand/open-graph-v2.jpg"),
   ]);
 
   for (const response of [robots, sitemap, manifest, favicon, openGraph]) {
@@ -155,14 +167,12 @@ test("serve robots, sitemap, manifest e assets de marca", async ({ request }) =>
   expect(sitemapText.includes(`${productionUrl}/`)).toBe(isIndexable);
   expect(manifestData.name).toBe("English For All");
   expect(manifestData.icons).toHaveLength(2);
-  expect(openGraph.headers()["content-type"]).toContain("image/png");
+  expect(openGraph.headers()["content-type"]).toContain("image/jpeg");
   expect(openGraph.headers()["cache-control"]).toContain("public");
 
   const openGraphImage = await openGraph.body();
-  expect(openGraphImage.subarray(1, 4).toString("ascii")).toBe("PNG");
-  expect(openGraphImage.readUInt32BE(16)).toBe(1729);
-  expect(openGraphImage.readUInt32BE(20)).toBe(910);
-  expect(openGraphImage.byteLength).toBeGreaterThan(100_000);
+  expect(openGraphImage.subarray(0, 3)).toEqual(Buffer.from([0xff, 0xd8, 0xff]));
+  expect(openGraphImage.byteLength).toBeLessThan(300_000);
 });
 
 test("não registra erros no console nem exceções de página", async ({ page }) => {
