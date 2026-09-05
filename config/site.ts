@@ -7,7 +7,7 @@ const isIndexable =
 export const siteConfig = {
   name: "English For All",
   description:
-    "Aulas de inglês online para crianças, adolescentes, jovens e adultos em todo o Brasil, com foco em comunicação, prática e acompanhamento próximo.",
+    "Aulas de inglês online para todas as idades, com foco em conversação, prática e acompanhamento próximo.",
   locale: "pt-BR",
   country: "Brasil",
   whatsappNumber: "5511942685665",

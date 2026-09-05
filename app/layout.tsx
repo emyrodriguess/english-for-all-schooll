@@ -17,7 +17,7 @@ const poppins = Poppins({
 
 const isVercelDeployment = process.env.VERCEL === "1";
 
-const title = "English For All | Aulas de Inglês Online para Todas as Idades";
+const title = "Aulas de Inglês Online | English For All";
 const socialImage = {
   url: "/brand/open-graph-v2.jpg",
   width: 1200,
@@ -48,6 +48,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],

@@ -3,14 +3,14 @@ import { expect, test } from "@playwright/test";
 const whatsappUrl = "https://wa.me/5511942685665";
 const productionUrl = "https://eforallschool.com.br";
 const expectedDescription =
-  "Aulas de inglês online para crianças, adolescentes, jovens e adultos em todo o Brasil, com foco em comunicação, prática e acompanhamento próximo.";
+  "Aulas de inglês online para todas as idades, com foco em conversação, prática e acompanhamento próximo.";
 const isIndexable = process.env.E2E_EXPECT_INDEXABLE === "1";
 
 test("expõe semântica e metadata completas", async ({ page }) => {
   await page.goto("/");
 
   await expect(page).toHaveTitle(
-    "English For All | Aulas de Inglês Online para Todas as Idades",
+    "Aulas de Inglês Online | English For All",
   );
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     "content",
@@ -48,6 +48,9 @@ test("expõe semântica e metadata completas", async ({ page }) => {
     "href",
     "/apple-touch-icon.png",
   );
+  await expect(
+    page.locator('link[rel="icon"][sizes="32x32"]'),
+  ).toHaveAttribute("href", "/favicon-32x32.png");
   await expect(page.locator("h1")).toHaveCount(1);
   await expect(page.locator("h2")).toHaveCount(8);
   await expect(page.locator('[data-slot="faq-item"]')).toHaveCount(9);
@@ -147,15 +150,16 @@ test("publica headers de segurança e cache", async ({ request }) => {
 });
 
 test("serve robots, sitemap, manifest e assets de marca", async ({ request }) => {
-  const [robots, sitemap, manifest, favicon, openGraph] = await Promise.all([
+  const [robots, sitemap, manifest, favicon, favicon32, openGraph] = await Promise.all([
     request.get("/robots.txt"),
     request.get("/sitemap.xml"),
     request.get("/site.webmanifest"),
     request.get("/favicon.ico"),
+    request.get("/favicon-32x32.png"),
     request.get("/brand/open-graph-v2.jpg"),
   ]);
 
-  for (const response of [robots, sitemap, manifest, favicon, openGraph]) {
+  for (const response of [robots, sitemap, manifest, favicon, favicon32, openGraph]) {
     expect(response.ok()).toBeTruthy();
   }
 
@@ -167,8 +171,15 @@ test("serve robots, sitemap, manifest e assets de marca", async ({ request }) =>
   expect(sitemapText.includes(`${productionUrl}/`)).toBe(isIndexable);
   expect(manifestData.name).toBe("English For All");
   expect(manifestData.icons).toHaveLength(2);
+  expect(favicon32.headers()["content-type"]).toContain("image/png");
+  expect(favicon32.headers()["cache-control"]).toContain("public");
   expect(openGraph.headers()["content-type"]).toContain("image/jpeg");
   expect(openGraph.headers()["cache-control"]).toContain("public");
+
+  const favicon32Image = await favicon32.body();
+  expect(favicon32Image.subarray(1, 4).toString("ascii")).toBe("PNG");
+  expect(favicon32Image.readUInt32BE(16)).toBe(32);
+  expect(favicon32Image.readUInt32BE(20)).toBe(32);
 
   const openGraphImage = await openGraph.body();
   expect(openGraphImage.subarray(0, 3)).toEqual(Buffer.from([0xff, 0xd8, 0xff]));
