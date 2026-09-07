@@ -43,28 +43,28 @@ export const audience = [
     title: "Crianças",
     description:
       "Aprendizado de inglês durante a infância com acompanhamento adequado à fase de aprendizagem.",
-    image: "/images/audience/children-learning.webp",
+    image: "/images/audience/children-learning-v2.webp",
     alt: "Criança estudando com caderno e materiais escolares.",
   },
   {
     title: "Adolescentes",
     description:
       "Desenvolvimento do idioma, comunicação e confiança durante uma fase importante de formação.",
-    image: "/images/audience/teenager-library-learning.webp",
+    image: "/images/audience/teenager-library-learning-v2.webp",
     alt: "Adolescente estudando online com notebook e caderno.",
   },
   {
     title: "Jovens",
     description:
       "Inglês para estudos, carreira, viagens, comunicação e novas oportunidades.",
-    image: "/images/audience/young-student-online.webp",
+    image: "/images/audience/young-student-online-v2.webp",
     alt: "Jovem estudando com notebook em uma biblioteca.",
   },
   {
     title: "Adultos",
     description:
       "Inglês para diferentes objetivos pessoais e profissionais, sem limite de idade.",
-    image: "/images/audience/adult-online-study.webp",
+    image: "/images/audience/adult-online-study-v2.webp",
     alt: "Adulta estudando online em uma mesa de trabalho.",
   },
 ] as const satisfies readonly AudienceItem[];
