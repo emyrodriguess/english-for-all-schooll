@@ -19,10 +19,10 @@ const isVercelDeployment = process.env.VERCEL === "1";
 
 const title = "Aulas de Inglês Online | English For All";
 const socialImage = {
-  url: "/brand/open-graph-v2.jpg",
-  width: 1200,
-  height: 630,
-  type: "image/jpeg",
+  url: "/brand/open-graph-v3.png",
+  width: 526,
+  height: 275,
+  type: "image/png",
   alt: "English For All — Inglês para a vida real.",
 };
 

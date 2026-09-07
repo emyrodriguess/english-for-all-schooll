@@ -18,19 +18,19 @@ test("expõe semântica e metadata completas", async ({ page }) => {
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    `${productionUrl}/brand/open-graph-v2.jpg`,
+    `${productionUrl}/brand/open-graph-v3.png`,
   );
   await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute(
     "content",
-    "1200",
+    "526",
   );
   await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute(
     "content",
-    "630",
+    "275",
   );
   await expect(page.locator('meta[property="og:image:type"]')).toHaveAttribute(
     "content",
-    "image/jpeg",
+    "image/png",
   );
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
     "content",
@@ -156,7 +156,7 @@ test("serve robots, sitemap, manifest e assets de marca", async ({ request }) =>
     request.get("/site.webmanifest"),
     request.get("/favicon.ico"),
     request.get("/favicon-32x32.png"),
-    request.get("/brand/open-graph-v2.jpg"),
+    request.get("/brand/open-graph-v3.png"),
   ]);
 
   for (const response of [robots, sitemap, manifest, favicon, favicon32, openGraph]) {
@@ -173,7 +173,7 @@ test("serve robots, sitemap, manifest e assets de marca", async ({ request }) =>
   expect(manifestData.icons).toHaveLength(2);
   expect(favicon32.headers()["content-type"]).toContain("image/png");
   expect(favicon32.headers()["cache-control"]).toContain("public");
-  expect(openGraph.headers()["content-type"]).toContain("image/jpeg");
+  expect(openGraph.headers()["content-type"]).toContain("image/png");
   expect(openGraph.headers()["cache-control"]).toContain("public");
 
   const favicon32Image = await favicon32.body();
@@ -182,7 +182,9 @@ test("serve robots, sitemap, manifest e assets de marca", async ({ request }) =>
   expect(favicon32Image.readUInt32BE(20)).toBe(32);
 
   const openGraphImage = await openGraph.body();
-  expect(openGraphImage.subarray(0, 3)).toEqual(Buffer.from([0xff, 0xd8, 0xff]));
+  expect(openGraphImage.subarray(1, 4).toString("ascii")).toBe("PNG");
+  expect(openGraphImage.readUInt32BE(16)).toBe(526);
+  expect(openGraphImage.readUInt32BE(20)).toBe(275);
   expect(openGraphImage.byteLength).toBeLessThan(300_000);
 });
 
