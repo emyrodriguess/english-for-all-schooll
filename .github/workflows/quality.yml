@@ -29,6 +29,9 @@ jobs:
       - name: Install browsers
         run: npx playwright install --with-deps chromium firefox webkit
 
+      - name: Verify landing page seal
+        run: npm run verify:landing-lock
+
       - name: Lint
         run: npm run lint
 

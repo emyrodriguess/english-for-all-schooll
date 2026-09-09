@@ -23,18 +23,9 @@
 # Internal product and design material
 /internal/
 /docs/
-/app/styleguide/
 /components.json
-/AGENTS.md
 /CLAUDE.md
 /prd/
 /PRD*.md
 /technical/
 /design-system/
-
-# Keep only the UI primitives required by the production landing page
-/components/ui/*
-!/components/ui/button.tsx
-!/components/ui/card.tsx
-!/components/ui/separator.tsx
-!/components/ui/sheet.tsx
