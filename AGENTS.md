@@ -27,3 +27,43 @@ The public landing page is approved, launched, and immutable by default.
 - Dependency or framework configuration changes are not automatically safe: if they are genuinely required for the internal system, keep them minimal and run the complete landing regression suite before handing off.
 - Run `npm run verify:landing-lock` before and after implementation work. A failure is a stop signal: revert the unintended protected-file change; do not refresh the hashes.
 - A future landing change requires explicit, landing-specific user authorization. Only then may the seal be deliberately updated, after visual and automated regression validation.
+
+## Internal system
+
+Before changing the internal backoffice, read:
+
+- `docs/internal-system/PRD.md`
+- `docs/internal-system/DECISIONS.md`
+
+These documents are the product source of truth. Do not silently decide unspecified business rules involving contracts, billing, cancellations, scheduling, or historical records.
+
+### Supabase and data
+
+- Use Supabase Auth. Never store password hashes in public application tables.
+- Store application user metadata in `public.profiles`, linked to `auth.users.id`.
+- Repository migrations under `supabase/migrations/` are the schema source of truth.
+- Inspect the target database before changes and never apply an unreviewed migration directly to production.
+- Enable RLS on every private table and scope policies to active internal profiles.
+- Contracts and payment receipts belong in private Storage buckets and must be accessed with authenticated, short-lived URLs.
+- Store money as PostgreSQL `numeric`, never floating point.
+- Store instants as `timestamptz`; business dates use `date`. The operational timezone is `America/Sao_Paulo`.
+- Protect financial, cancellation, and scheduling invariants with database constraints and transactional functions when applicable.
+- Normal product flows never hard-delete historical business records.
+- Index foreign keys and columns used by RLS and common filters.
+
+### Internal architecture
+
+- Keep internal routes and components separate from landing-owned files.
+- Organize domain code by students, contracts, finance, schedule, classes, planner, imports, and integrations.
+- External messaging must flow through an outbox and provider adapter; financial rules must not depend on a provider SDK.
+- Completed functionality uses real persistence and explicitly handles loading, empty, success, and error states.
+
+### Required validation
+
+Before delivery, run:
+
+- `npm run verify:landing-lock`
+- `npm run lint`
+- `npm run typecheck`
+- relevant automated tests
+- Supabase security and performance advisors after database DDL changes

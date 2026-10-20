@@ -1,0 +1,3 @@
+-- Intentionally empty.
+-- Create the initial administrator through Supabase Auth Admin, then update
+-- public.profiles with their display name if needed.

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "verify:landing-lock": "node scripts/verify-landing-lock.mjs",
+    "check": "npm run verify:landing-lock && npm run lint && npm run typecheck",
     "lint": "npm run verify:landing-lock && eslint .",
     "typecheck": "tsc --noEmit",
     "test:e2e": "cross-env E2E_EXPECT_INDEXABLE=1 npm run test:e2e:run",
@@ -16,18 +17,25 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",
     "@radix-ui/react-slot": "^1.3.3",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.116.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "csv-parse": "^7.0.2",
     "lucide-react": "^1.33.0",
-    "next": "16.3.2",
+    "next": "16.4.2",
     "radix-ui": "^1.6.7",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "recharts": "^3.8.0",
+    "server-only": "0.0.1",
+    "sonner": "^2.0.8",
     "tailwind-merge": "^3.6.0",
     "tw-animate-css": "^1.4.0",
-    "vaul": "^1.1.2"
+    "vaul": "^1.1.2",
+    "zod": "^4.6.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
@@ -38,10 +46,13 @@
     "autoprefixer": "10.4.21",
     "cross-env": "^10.1.0",
     "eslint": "^9.39.0",
-    "eslint-config-next": "16.3.2",
+    "eslint-config-next": "16.4.2",
     "postcss": "^8.5.26",
     "shadcn": "^4.18.0",
     "tailwindcss": "^4.3.3",
     "typescript": "5.8.3"
+  },
+  "overrides": {
+    "source-map-js": "1.2.2"
   }
 }

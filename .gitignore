@@ -11,6 +11,7 @@
 # Environment variables and local Vercel state
 .env
 .env.*
+!.env.example
 /.vercel/
 
 # Local QA artifacts
@@ -22,10 +23,16 @@
 
 # Internal product and design material
 /internal/
-/docs/
+/docs/*
+!/docs/internal-system/
+!/docs/internal-system/**
 /components.json
 /CLAUDE.md
 /prd/
 /PRD*.md
 /technical/
 /design-system/
+
+# Supabase local development
+/supabase/.branches/
+/supabase/.temp/
