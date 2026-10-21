@@ -15,7 +15,7 @@
 
 # Never upload internal or local-only material, even from a CLI deployment.
 app/styleguide/
-internal/
+/internal/
 docs/
 tests/
 test-results/
