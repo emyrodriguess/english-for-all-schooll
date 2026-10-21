@@ -17,7 +17,7 @@
     { "path": "components/landing/final-cta-section.tsx", "sha256": "0fc96b5268c1af9fbac4f305307e3fb768d2e2661a4b1141cb6f27eb3b1320f4" },
     { "path": "components/landing/floating-whatsapp.tsx", "sha256": "e312f3f89843b4498ab6153d4e3befab31deac7fcf860c4d8dc2fc813904cc61" },
     { "path": "components/landing/founder-section.tsx", "sha256": "0313779012a1ebae8327ec5018ae3e70a2d00b74d7d2d95a7cf9c576c46f0964" },
-    { "path": "components/landing/hero-section.tsx", "sha256": "bf8f8c9d09fa946677558adf7b22efddd948cd439850764063202860a32195d8" },
+    { "path": "components/landing/hero-section.tsx", "sha256": "3a3139f38d63ed7b43fd2fb8feea3ca59eb9c96608d6f746e1fdf4a227999bc3" },
     { "path": "components/landing/methodology-section.tsx", "sha256": "521481f11a30e33d63bbe2e6ad85ee4a039b524275b1411d0a464ae3adf998d2" },
     { "path": "components/landing/mobile-navigation.tsx", "sha256": "4ce499505dea0ca99323707577b1d7317879b3325822d49a29797f84c0fca00c" },
     { "path": "components/landing/section-heading.tsx", "sha256": "7f29c982e311454c48ec9258ee0e534149da350f68d3b2530343b4ae25d2fa2c" },
